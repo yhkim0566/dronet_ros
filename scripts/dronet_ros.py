@@ -35,6 +35,8 @@ class zedRosDronet:
         
         self.model = keras.models.model_from_json(self.loaded_model)
         self.model.load_weights(weights_path)
+        self.isGet = False
+
         
         """
         self.dronet_thread = Thread(target=self.prediction, args())
@@ -54,7 +56,7 @@ class zedRosDronet:
                 
             if len(self.pred) == 4:
                 print("Yaw: ", self.pred[0][0,0], "X: ", self.pred[1][0,0],
-                     "Y: ", self.pred[1][0,0], "Z: ", self.pred[1][0,0])   
+                     "Y: ", self.pred[2][0,0], "Z: ", self.pred[3][0,0])   
 
    
     def img_callback(self, data):
@@ -75,8 +77,8 @@ def main():
     rospack = rospkg.RosPack()
     #print(rospack.get_path('dronet_ros'))
     pkg_path = rospack.get_path('dronet_ros')
-    json_path = pkg_path + '/models/model_struct.json'
-    weights_path = pkg_path + '/models/best_weights.h5'
+    json_path = pkg_path + '/models/mixed/model_struct.json'
+    weights_path = pkg_path + '/models/mixed/weights_044.h5'
     dronet = zedRosDronet(json_path=json_path, weights_path=weights_path)
     rospy.init_node('dronet_node', anonymous=True)
     
