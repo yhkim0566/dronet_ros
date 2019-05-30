@@ -7,6 +7,7 @@ from threading import Thread
 import numpy as np
 import time
 import rospy
+import rospkg
 from sensor_msgs.msg import Image, CompressedImage
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
@@ -66,8 +67,11 @@ class zedRosDronet:
         
         
 def main():
-    json_path = './model/model_struct.json'
-    weights_path = './model/best_weights.h5'
+    rospack = rospkg.RosPack()
+    #print(rospack.get_path('dronet_ros'))
+    pkg_path = rospack.get_path('dronet_ros')
+    json_path = pkg_path + '/models/model_struct.json'
+    weights_path = pkg_path + '/models/best_weights.h5'
     dronet = zedRosDronet(json_path=json_path, weights_path=weights_path)
     rospy.init_node('dronet_node', anonymous=True)
     
