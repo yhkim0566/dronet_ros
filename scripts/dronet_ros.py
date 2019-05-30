@@ -49,7 +49,12 @@ class zedRosDronet:
     def prediction(self):
         if self.isGet:
             self.pred = self.model.predict(self.gray_resize)
-            print("Steering: ", self.pred[0][0,0], "Collision: ", self.pred[1][0,0])    
+            if len(self.pred) == 2:
+                print("Steering: ", self.pred[0][0,0], "Collision: ", self.pred[1][0,0])    
+                
+            if len(self.pred) == 4:
+                print("Yaw: ", self.pred[0][0,0], "X: ", self.pred[1][0,0],
+                     "Y: ", self.pred[1][0,0], "Z: ", self.pred[1][0,0])   
 
    
     def img_callback(self, data):
